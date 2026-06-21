@@ -1,0 +1,84 @@
+{
+  "info": {
+    "name": "Vegan Fresh API",
+    "description": "Complete API for Vegan Fresh e-commerce platform",
+    "version": "1.0.0"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:5000/api/auth/register",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": \"John Doe\", \"email\": \"john@example.com\", \"password\": \"password123\"}"
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:5000/api/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\": \"john@example.com\", \"password\": \"password123\"}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "Get All Products",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:5000/api/products"
+          }
+        },
+        {
+          "name": "Get Product by ID",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:5000/api/products/:id"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cart",
+      "item": [
+        {
+          "name": "Get Cart",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:5000/api/cart",
+            "header": {
+              "Authorization": "Bearer YOUR_TOKEN_HERE"
+            }
+          }
+        },
+        {
+          "name": "Add to Cart",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:5000/api/cart/add",
+            "header": {
+              "Authorization": "Bearer YOUR_TOKEN_HERE"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"productId\": \"PRODUCT_ID\", \"quantity\": 2}"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
