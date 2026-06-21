@@ -1,5 +1,6 @@
 const Order = require('../models/Order');
 const Cart = require('../models/Cart');
+const { sendOrderConfirmation, sendOrderStatusUpdate } = require('../utils/emailService');
 
 const generateOrderNumber = () => {
   return 'ORD-' + Date.now();
@@ -28,12 +29,16 @@ exports.createOrder = async (req, res) => {
       paymentMethod,
       totalAmount: cart.totalPrice,
       subtotal: cart.totalPrice,
-      tax: Math.round(cart.totalPrice * 0.1), // 10% tax
+      tax: Math.round(cart.totalPrice * 0.1),
       deliveryFee: 50,
     });
     
     // Clear cart
     await Cart.findOneAndUpdate({ user: req.userId }, { items: [], totalPrice: 0 });
+    
+    // Send confirmation email
+    const user = await User.findById(req.userId);
+    await sendOrderConfirmation(user.email, order);
     
     res.status(201).json({ success: true, message: 'Order created', data: order });
   } catch (error) {
@@ -72,7 +77,11 @@ exports.updateOrderStatus = async (req, res) => {
       req.params.id,
       { orderStatus: status },
       { new: true }
-    );
+    ).populate('user');
+    
+    // Send email update
+    const { sendOrderStatusUpdate } = require('../utils/emailService');
+    await sendOrderStatusUpdate(order.user.email, status, order.orderNumber);
     
     res.status(200).json({ success: true, message: 'Order updated', data: order });
   } catch (error) {

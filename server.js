@@ -1,8 +1,10 @@
 const express = require('express');
 require('dotenv').config();
+const http = require('http');
 const connectDB = require('./config/database');
 const createIndexes = require('./config/indexes');
 const { limiter } = require('./middleware/rateLimiter');
+const { initializeSocket } = require('./config/socket');
 
 // Import all routes
 const authRoutes = require('./routes/authRoutes');
@@ -16,9 +18,16 @@ const blogRoutes = require('./routes/blogRoutes');
 const couponRoutes = require('./routes/couponRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
+const socketRoutes = require('./routes/socketRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+// Create HTTP server for Socket.io
+const server = http.createServer(app);
+
+// Initialize Socket.io
+initializeSocket(server);
 
 // Connect to Database & Create Indexes
 connectDB();
@@ -55,6 +64,7 @@ app.get('/', (req, res) => {
       coupons: '/api/coupons',
       payments: '/api/payments',
       upload: '/api/upload',
+      socket: 'WebSocket enabled',
     }
   });
 });
@@ -71,6 +81,7 @@ app.use('/api/blog', blogRoutes);
 app.use('/api/coupons', couponRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api/socket', socketRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
@@ -84,8 +95,9 @@ app.use((req, res) => {
 });
 
 // Start server
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`✅ Server running on http://localhost:${PORT}`);
   console.log(`📊 Rate limiting enabled`);
+  console.log(`🔌 Socket.io enabled`);
   console.log(`🗄️  MongoDB indexes created`);
 });
