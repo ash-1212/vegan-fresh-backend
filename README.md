@@ -98,7 +98,7 @@ git push origin main
 
 ## Author
 
-Ayesh Nazish - MERN Backend Lead
+Ayesha Nazish - MERN Backend Lead
 
 ## License
 
