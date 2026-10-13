@@ -1,6 +1,6 @@
 # Vegan Fresh Backend API
 
-Complete MERN backend for organic vegetables e-commerce platform.
+Complete MERN backend for an organic vegetables e-commerce platform.
 
 ## Features
 - User Authentication (JWT)
@@ -31,74 +31,77 @@ npm install
 
 ## Environment Variables
 
-Create `.env` file:
+Create a `.env` file in the project root and configure the required environment variables using your own credentials.
+
+Example `.env.example`:
+
+```env
 PORT=5000
-
-MONGODB_URI=mongodb+srv://admin:password@cluster.mongodb.net/veganfresh
-
-JWT_SECRET=your_jwt_secret
-
+MONGODB_URI=
+JWT_SECRET=
 NODE_ENV=development
+STRIPE_SECRET_KEY=
+CLOUDINARY_CLOUD_NAME=
+SENDGRID_API_KEY=
+```
 
-STRIPE_SECRET_KEY=sk_test_xxx
+**Security note:** Never commit your actual `.env` file, API keys, database credentials, or JWT secrets to GitHub. Add `.env` to your `.gitignore` file.
 
-CLOUDINARY_CLOUD_NAME=xxx
-
-SENDGRID_API_KEY=SG.xxx
-
-## Running
+## Running the Server
 
 ```bash
 node server.js
 ```
 
-Server runs on: `http://localhost:5000`
+Server runs at:
+
+`http://localhost:5000`
 
 ## API Endpoints
 
 ### Authentication
-- `POST /api/auth/register` - Register user
-- `POST /api/auth/login` - Login user
+- `POST /api/auth/register` — Register a user
+- `POST /api/auth/login` — Log in a user
 
 ### Products
-- `GET /api/products` - Get all products
-- `GET /api/products/:id` - Get product by ID
-- `POST /api/products` - Create product (admin)
+- `GET /api/products` — Get all products
+- `GET /api/products/:id` — Get a product by ID
+- `POST /api/products` — Create a product (admin)
 
 ### Cart
-- `GET /api/cart` - Get user cart
-- `POST /api/cart/add` - Add to cart
-- `PUT /api/cart/update/:itemId` - Update cart item
-- `DELETE /api/cart/remove/:itemId` - Remove from cart
+- `GET /api/cart` — Get the user's cart
+- `POST /api/cart/add` — Add an item to the cart
+- `PUT /api/cart/update/:itemId` — Update a cart item
+- `DELETE /api/cart/remove/:itemId` — Remove an item from the cart
 
 ### Orders
-- `POST /api/orders` - Create order
-- `GET /api/orders` - Get user orders
-- `GET /api/orders/:id` - Get order details
+- `POST /api/orders` — Create an order
+- `GET /api/orders` — Get the user's orders
+- `GET /api/orders/:id` — Get order details
 
 ### Payments
-- `POST /api/payments/create-intent` - Create Stripe payment
-- `POST /api/payments/confirm` - Confirm payment
+- `POST /api/payments/create-intent` — Create a Stripe payment intent
+- `POST /api/payments/confirm` — Confirm a payment
 
 ### Admin
-- `GET /api/admin/dashboard` - Dashboard stats
-- `GET /api/admin/users` - All users
-- `GET /api/admin/orders` - All orders
+- `GET /api/admin/dashboard` — Retrieve dashboard statistics
+- `GET /api/admin/users` — Retrieve all users
+- `GET /api/admin/orders` — Retrieve all orders
 
 ## Postman Collection
 
-Import `postman-collection.json` into Postman for testing.
+Import `postman-collection.json` into Postman to test the API endpoints.
 
 ## Deployment
 
-Deploy to Render:
-```bash
-git push origin main
-```
+This project can be deployed to Render or another compatible hosting platform.
+
+Before deployment, configure the required environment variables in the hosting provider's dashboard.
 
 ## Author
 
-Ayesha Nazish - MERN Backend Lead
+**Ayesha Nazish**  
+MERN Backend Lead
 
 ## License
 
